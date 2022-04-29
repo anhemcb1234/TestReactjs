@@ -1,24 +1,17 @@
-import React from 'react';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-} from "react-router-dom";
-import About from './components/About';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Admin from "./pages/Admin";
+import Edit from "./pages/Edit";
+
 export default function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<About />} >
-        
-          </Route>
-
+          <Route path="/" element={<Admin />} />
+          <Route path="/edit" element={<Edit />} />
         </Routes>
-        {/* <Link to={`/about?name=mien&age=20`}>about</Link> */}
       </BrowserRouter>
-
     </div>
-  )
+  );
 }
