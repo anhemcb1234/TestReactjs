@@ -14,10 +14,10 @@ const Add = () => {
   const [todos, setTodos] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState("Kinh tế");
   const [id, setId] = useState(0);
   let unsub = null;
-
+  let time = new Date()
   const addNote = async () => {
     const collectionRef = collection(db, "list");
     await addDoc(collectionRef, {
@@ -25,6 +25,7 @@ const Add = () => {
       id: uniqid(),
       content: content,
       category: category,
+      time: time,
     });
   }
   
@@ -47,12 +48,12 @@ const Add = () => {
               title: doc.data().title,
               content: doc.data().content,
               category: doc.data().category,
-              id_user: doc.data().id
+              id_user: doc.data().id,
+              time: doc.data().time,
           });
       });
       setTodos(localTodos);
       setContent('');
-      setCategory(0);
       setTitle('');
   });
   })();
@@ -60,9 +61,10 @@ const Add = () => {
   return (
     <div className="container mt-2 mx-auto">
       <div>
+        <button onClick={hihi}>hihi</button>
         <h1 className="text-center font-bold mt-10 uppercase">Thêm Báo</h1>
         <div className="my-10">
-          <label htmlFor="comment" className="text-lg text-gray-600"></label>
+          <label htmlFor="comment" className="text-lg text-gray-600">Title</label>
           <input
             onChange={(evt) => setTitle(evt.target.value)}
             value={title}
@@ -71,7 +73,7 @@ const Add = () => {
             placeholder=""
           ></input>
 
-          <label htmlFor="comment" className="text-lg text-gray-600"></label>
+          <label htmlFor="comment" className="text-lg text-gray-600">Content</label>
           <input
             onChange={(evt) => setContent(evt.target.value)}
             value={content}
@@ -81,9 +83,9 @@ const Add = () => {
           ></input>
 
           <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="Xã hội">Xã hội</option>
             <option value="Kinh tế">Kinh tế</option>
             <option value="Đời sống">Đời sống</option>
+            <option value="Xã hội">Xã hội</option>
           </select>
         </div>
         <div className="flex items-center justify-between">
@@ -96,7 +98,7 @@ const Add = () => {
         </div>
       </div>
       <div className="mt-10">
-        {todos?.map((item, index) => (
+        {todos?.sort((a, b) => (a.time?.nanoseconds - b.time?.nanoseconds))?.map((item, index) => (
                         <div className='flex items-center justify-between my-2' key={index}>
                             <p><span>{index+1}</span>. {item.content}</p> 
                             <p>{item.title}</p>
