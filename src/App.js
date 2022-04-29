@@ -5,18 +5,17 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import About from './components/About';
+import Home from './components/Home';
 export default function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<About />} >
+          <Route path="/" element={<Home />} >
         
           </Route>
 
         </Routes>
-        {/* <Link to={`/about?name=mien&age=20`}>about</Link> */}
       </BrowserRouter>
 
     </div>
